@@ -1,0 +1,42 @@
+{
+    "member1": {
+        "username": "alex",
+        "password": "pass123",
+        "id": "M0001"
+    },
+    "member2": {
+        "username": "yoyo",
+        "password": "pass456",
+        "id": "M0002"
+    },
+    "member3": {
+        "username": "joey",
+        "password": "pass123",
+        "id": "M0003"
+    },
+    "member4": {
+        "username": "gary",
+        "password": "pass456",
+        "id": "M0004"
+    },
+    "member5": {
+        "username": "ken",
+        "password": "pass123",
+        "id": "M0005"
+    },
+    "member6": {
+        "username": "calvin",
+        "password": "pass456",
+        "id": "M0006"
+    },
+    "member7": {
+        "username": "karen",
+        "password": "pass123",
+        "id": "M0007"
+    },
+    "member8": {
+        "username": "amy",
+        "password": "pass123",
+        "id": "M0008"
+    }
+}
