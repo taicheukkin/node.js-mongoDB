@@ -1,0 +1,102 @@
+<!-- public/index.html -->
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <title>會員登入 - JWT</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      padding: 40px;
+      text-align: center;
+    }
+    form {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      display: inline-block;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      box-sizing: border-box;
+    }
+    input[type="submit"] {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+    .link {
+      margin-top: 20px;
+      display: block;
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body>
+  <h2>會員登入</h2>
+  <form action="/submit" method="post">
+    <label for="username">帳號：</label>
+    <input type="text" id="username" name="username" required>
+
+    <label for="password">密碼：</label>
+    <input type="password" id="password" name="password" required>
+
+    <input type="submit" value="登入">
+  </form>
+
+  <a class="link" href="/sign_up2.html">👉 還沒有帳號？點此註冊</a>
+
+  <script>
+    // 假設你已經從登入成功頁面拿到 token
+    const token = 'your-secret-key';
+
+    // 呼叫受保護的 /profile API
+    fetch("/profile", {
+      method: "GET",
+      headers: {
+        "Authorization": `Bearer ${token}`,   // ✅ 加上 JWT Token
+        "Content-Type": "application/json"
+      }
+    })
+    .then(res => {
+      if (!res.ok) throw new Error("驗證失敗或 Token 過期");
+      return res.text();
+    })
+    .then(html => {
+      // 把回傳的 HTML 插入頁面
+      document.body.innerHTML = html;
+    })
+    .catch(err => {
+      console.error("錯誤：", err);
+    });
+  </script>
+</body>
+</html>
+
+<!--
+在前端呼叫受保護的 API（例如 /profile）時，把登入時取得的 JWT Token 放進 Authorization header。
+這樣伺服器的 authenticateToken middleware 才能驗證。
+
+🔑 重點
+Header 名稱必須是 Authorization。
+格式是 Bearer <token>（注意空格）。
+後端的 authenticateToken 會從這裡解析並驗證。
+-->

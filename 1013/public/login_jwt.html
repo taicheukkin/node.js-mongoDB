@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>使用者登入</title>
+</head>
+<body>
+    <h2>登入系統</h2>
+    <form id="loginForm">
+        <label for="username">帳號：</label>
+        <input type="text" id="username" name="username" required><br><br>
+
+        <label for="password">密碼：</label>
+        <input type="password" id="password" name="password" required><br><br>
+
+        <button type="submit">登入</button>
+    </form>
+    <p id="message"></p> <!-- 新增用於顯示訊息的區塊 -->
+
+    <!-- 以下程式碼負責處理表單提交，並發送 POST 請求到 /login 端點 -->
+    <script>
+        // document.getElementById('loginForm')：找到 loginForm 表單。
+        // addEventListener('submit', async (event) => { ... })：監聽 表單提交事件。
+        // event.preventDefault();：取消瀏覽器預設行為（防止頁面重新載入）。
+        document.getElementById('loginForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // fetch('/login', { ... })：向伺服器 /login 端點發送 POST 請求。
+            // method: 'POST'：使用 POST 方法，要發送使用者資料。
+            // headers: { ... }：指定 JSON 格式，確保伺服器能解析數據。
+            // body: JSON.stringify({ ... })：將 username 和 password 轉換為 JSON 格式，然後發送。
+            try {
+                const response = await fetch('/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+
+                const result = await response.json();
+
+                // 顯示成功或錯誤訊息
+                document.getElementById('message').textContent = result.message;
+
+                // 如果登入成功，儲存 Token 並跳轉
+                // if (response.ok) → 如果登入成功：儲存 JWT Token 到 localStorage，確保登入
+                // 狀態保持，並跳轉到 profile2.html，顯示使用者資訊。否則，顯示錯誤訊息。
+                if (response.ok) {
+                    localStorage.setItem('jwtToken', result.token);
+                    window.location.href = "/profile2.html";
+                }
+            } catch (error) {
+                console.error("登入請求失敗:", error);
+                document.getElementById('message').textContent = "登入請求失敗，請稍後再試。";
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+
+<!-- **********************************************************************************
+// ************************************************************************************
+// source: Copilot 
+-->
+
+
