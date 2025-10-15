@@ -1,0 +1,13 @@
+
+Email Login:
+https://kcraerb.org/webmail
+account:pc0x@kcraerb.org
+password: kcrastd@0x
+
+MongoDB Login:
+https://account.mongodb.com/account/login
+account:pc0x@kcraerb.org
+password:kcraNode
+
+
+mongodb+srv://teamC:kcraNode@cluster0.c497cya.mongodb.net/
